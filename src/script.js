@@ -37,10 +37,8 @@ const colors = {
 /**
  * Light
  */
-const hemiLight = new THREE.AmbientLight(colors.color1);
-hemiLight.intensity = 5
+const hemiLight = new THREE.PointLight(colors.color1, 5);
 hemiLight.position.set(0, 10, -30);
-hemiLight.lookAt(0, 0, 0)
 
 const dirLight = new THREE.DirectionalLight(colors.color2);
 dirLight.intensity = 2
@@ -52,22 +50,26 @@ dirLight2.intensity = 3
 dirLight2.position.set(-10, -50, 50);
 dirLight2.shadow.normalBias = 0.015
 
-scene.add(dirLight.target, dirLight2.target)
-scene.add(hemiLight, dirLight);
+scene.add(hemiLight, dirLight, dirLight2);
+
+
 const folder1 = gui.addFolder('Light-1');
 folder1.add(dirLight.position, 'x', - 100, 100, 0.01).name('position X')
 folder1.add(dirLight.position, 'y', - 100, 100, 0.01).name('position y')
 folder1.add(dirLight.position, 'z', - 100, 100, 0.01).name('position z')
+folder1.add(dirLight, 'intensity', - 100, 100, 0.01).name('intensity')
 
 const folder2 = gui.addFolder('Light-2');
 folder2.add(dirLight2.position, 'x', - 100, 100, 0.01).name('position X')
 folder2.add(dirLight2.position, 'y', - 100, 100, 0.01).name('position y')
 folder2.add(dirLight2.position, 'z', - 100, 100, 0.01).name('position z')
+folder2.add(dirLight2, 'intensity', - 100, 100, 0.01).name('intensity')
 
 const folder3 = gui.addFolder('Light-3');
 folder3.add(hemiLight.position, 'x', - 100, 100, 0.01).name('position X')
 folder3.add(hemiLight.position, 'y', - 100, 100, 0.01).name('position y')
 folder3.add(hemiLight.position, 'z', - 100, 100, 0.01).name('position z')
+folder3.add(hemiLight, 'intensity', - 100, 100, 0.01).name('intensity')
 /**
  * loaders
  */
@@ -208,7 +210,6 @@ function document_mouseMoveHandler({clientX, clientY}) {
     let mouse = point(clientX, clientY);
     let mouseFraction = ((mouse.x * 100) / rectangle.width)
     const frameIndex = Math.min(frameCount, Math.ceil(mouseFraction));
-    console.log(frameIndex)
     if (model) {
         gsap.to(
             vectorsRotate,
@@ -226,9 +227,11 @@ function document_mouseMoveHandler({clientX, clientY}) {
 const tick = () => {
 
     if (model) {
+
         model.rotation.set(...vectorsRotate)
         dirLight.target = model
         dirLight2.target = model
+        hemiLight.target = model
     }
 
     renderer.render(scene, camera)
