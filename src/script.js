@@ -35,7 +35,6 @@ sizeDevice()
  */
 // Debug
 const gui = new dat.GUI()
-const debugObject = {}
 // Canvas
 const canvasWrapperOne = document.querySelector('.canvas-w-one')
 const canvasOne = document.querySelector('canvas.webgl-one')
