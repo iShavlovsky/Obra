@@ -10,7 +10,26 @@ import {CustomEase} from "gsap/CustomEase";
 
 gsap.registerPlugin(CustomEase);
 
-
+let cameraPositionDevice= {
+    x: 0,
+    z: 0
+}
+const widthDevice = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+const sizeDevice = () => {
+    if (widthDevice < 480) {
+        // canvasWrapper.setAttribute("style","width:100%")
+        cameraPositionDevice.x = -1
+        cameraPositionDevice.z = 20
+    } else if (widthDevice > 480 && widthDevice < 991) {
+        // canvasWrapper.setAttribute("style","width:100%")
+        cameraPositionDevice.x = -2
+        cameraPositionDevice.z = 20
+    } else if (widthDevice > 991) {
+        cameraPositionDevice.x  = -3
+        cameraPositionDevice.z = 10
+    }
+}
+sizeDevice()
 /**
  * Base
  */
@@ -136,12 +155,15 @@ const updateAllMaterials = () => {
 /**
  * Sizes
  */
+
+
 const sizes = {
     width: canvasWrapperOne.clientWidth,
     height: canvasWrapperOne.clientHeight
 }
 
 window.addEventListener('resize', () => {
+    sizeDevice()
     // Update sizes
     sizes.width = canvasWrapperOne.clientWidth
     sizes.height = canvasWrapperOne.clientHeight
@@ -161,9 +183,9 @@ window.addEventListener('resize', () => {
 // Base camera
 const aspectRatio = sizes.width / sizes.height
 const camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.1, 1000)
-camera.position.x = -3
+camera.position.x = cameraPositionDevice.x
 camera.position.y = 0
-camera.position.z = 10
+camera.position.z = cameraPositionDevice.z
 scene.add(camera)
 
 // Controls
