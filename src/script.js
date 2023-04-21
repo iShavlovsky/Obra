@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import {CustomEase} from "gsap/CustomEase";
 
 
+
 gsap.registerPlugin(CustomEase);
 
 let cameraPositionDevice= {
@@ -34,7 +35,7 @@ sizeDevice()
  * Base
  */
 // Debug
-const gui = new dat.GUI()
+// const gui = new dat.GUI()
 // Canvas
 const canvasWrapperOne = document.querySelector('.canvas-w-one')
 const canvasOne = document.querySelector('canvas.webgl-one')
@@ -71,23 +72,23 @@ dirLight2.shadow.normalBias = 0.015
 scene.add(hemiLight, dirLight, dirLight2);
 
 
-const folder1 = gui.addFolder('Light-1');
-folder1.add(dirLight.position, 'x', - 100, 100, 0.01).name('position X')
-folder1.add(dirLight.position, 'y', - 100, 100, 0.01).name('position y')
-folder1.add(dirLight.position, 'z', - 100, 100, 0.01).name('position z')
-folder1.add(dirLight, 'intensity', - 100, 100, 0.01).name('intensity')
-
-const folder2 = gui.addFolder('Light-2');
-folder2.add(dirLight2.position, 'x', - 100, 100, 0.01).name('position X')
-folder2.add(dirLight2.position, 'y', - 100, 100, 0.01).name('position y')
-folder2.add(dirLight2.position, 'z', - 100, 100, 0.01).name('position z')
-folder2.add(dirLight2, 'intensity', - 100, 100, 0.01).name('intensity')
-
-const folder3 = gui.addFolder('Light-3');
-folder3.add(hemiLight.position, 'x', - 100, 100, 0.01).name('position X')
-folder3.add(hemiLight.position, 'y', - 100, 100, 0.01).name('position y')
-folder3.add(hemiLight.position, 'z', - 100, 100, 0.01).name('position z')
-folder3.add(hemiLight, 'intensity', - 100, 100, 0.01).name('intensity')
+// const folder1 = gui.addFolder('Light-1');
+// folder1.add(dirLight.position, 'x', - 100, 100, 0.01).name('position X')
+// folder1.add(dirLight.position, 'y', - 100, 100, 0.01).name('position y')
+// folder1.add(dirLight.position, 'z', - 100, 100, 0.01).name('position z')
+// folder1.add(dirLight, 'intensity', - 100, 100, 0.01).name('intensity')
+//
+// const folder2 = gui.addFolder('Light-2');
+// folder2.add(dirLight2.position, 'x', - 100, 100, 0.01).name('position X')
+// folder2.add(dirLight2.position, 'y', - 100, 100, 0.01).name('position y')
+// folder2.add(dirLight2.position, 'z', - 100, 100, 0.01).name('position z')
+// folder2.add(dirLight2, 'intensity', - 100, 100, 0.01).name('intensity')
+//
+// const folder3 = gui.addFolder('Light-3');
+// folder3.add(hemiLight.position, 'x', - 100, 100, 0.01).name('position X')
+// folder3.add(hemiLight.position, 'y', - 100, 100, 0.01).name('position y')
+// folder3.add(hemiLight.position, 'z', - 100, 100, 0.01).name('position z')
+// folder3.add(hemiLight, 'intensity', - 100, 100, 0.01).name('intensity')
 /**
  * loaders
  */
@@ -107,6 +108,7 @@ loader.load(
         model.scale.set(1, 1, 1)
         model.position.set(0, -1, 0)
         scene.add(model);
+
         updateAllMaterials()
 
         // gui.add(model.rotation, 'y', - 10, 10, 0.01)
@@ -129,25 +131,20 @@ const updateAllMaterials = () => {
             &&
             child.material instanceof THREE.MeshStandardMaterial) {
             const parameters = {
-                color: 0xffffff
+                color: '#413e3e'
             }
-            child.material.metalness = 1
-            child.material.roughness = 0.35
+            child.material.metalness = 0.9877
+            child.material.roughness = 0.4715
             child.material.color.set(parameters.color)
-            const folder4 = gui.addFolder('Object');
 
-            folder4.addColor(parameters, 'color')
-                .onChange(() =>
-                {
-                    child.material.color.set(parameters.color)
-                })
-            folder4.add(child.material, 'metalness').min(0).max(1).step(0.0001)
-            folder4.add(child.material, 'roughness').min(0).max(1).step(0.0001)
-
-
-
-
-
+            // const folder4 = gui.addFolder('Object');
+            // folder4.addColor(parameters, 'color')
+            //     .onChange(() =>
+            //     {
+            //         child.material.color.set(parameters.color)
+            //     })
+            // folder4.add(child.material, 'metalness').min(0).max(1).step(0.0001)
+            // folder4.add(child.material, 'roughness').min(0).max(1).step(0.0001)
         }
     })
 }
@@ -213,11 +210,11 @@ vector.y = 0
 vector.z = 0
 
 const curveRoad = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, -20, 0),
-    new THREE.Vector3(0, -20, -0.01),
+    new THREE.Vector3(0, -12, 0),
+    new THREE.Vector3(0, -12, -0.008),
     new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, 20, 0.01),
-    new THREE.Vector3(0, 20, 0),
+    new THREE.Vector3(0, 12, 0.008),
+    new THREE.Vector3(0, 12, 0),
 ]);
 
 const points = curveRoad.getPoints(100);
